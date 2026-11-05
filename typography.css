@@ -1,0 +1,132 @@
+/* One intentional, high-legibility font family. If the web font is unavailable,
+   the site falls back to a consistent native sans-serif stack. */
+:root {
+  font-family: "DM Sans", "Segoe UI", Arial, Helvetica, sans-serif;
+  font-synthesis: weight style;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: "DM Sans", "Segoe UI", Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  letter-spacing: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: "DM Sans", "Segoe UI", Arial, Helvetica, sans-serif;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+p { line-height: 1.7; }
+
+.hero h1 {
+  font-size: clamp(44px, 5.25vw, 70px);
+  font-weight: 750;
+  letter-spacing: -0.042em;
+  line-height: 1.11;
+}
+
+.hero-lead {
+  font-size: 17px;
+  line-height: 1.73;
+}
+
+.section h2 {
+  font-weight: 720;
+  letter-spacing: -0.025em;
+  line-height: 1.17;
+}
+
+.section-heading p,
+.data-grid > div:first-child > p,
+.submission-grid > div:first-child > p {
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+.intro-right p:first-child {
+  font-size: 18px;
+  line-height: 1.72;
+}
+
+.brand-label {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+}
+
+.brand-label small {
+  font-size: 10px;
+  letter-spacing: 0.10em;
+}
+
+.overline, .section-kicker, .small-kicker,
+.mission-time, .data-type, .progress-title,
+.control-title, .section-tag {
+  font-weight: 750;
+  letter-spacing: 0.095em;
+}
+
+.overline, .section-kicker, .small-kicker { font-size: 12px; }
+.top-nav a, .header-cta, .button { font-size: 13px; font-weight: 700; }
+.header-cta { font-size: 13px; }
+.hero-metadata { font-size: 13px; }
+.learning-item strong { font-size: 17px; font-weight: 700; }
+.learning-item p { font-size: 13px; line-height: 1.65; }
+.notice { font-size: 14px; }
+
+.data-card h3, .mission h3, .mini-question h3 {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+.data-card p { font-size: 13px; line-height: 1.7; }
+.data-type { font-size: 11px; }
+.inline-link, .inline-button { font-size: 13px; }
+
+.control-title { font-size: 13px; }
+.control-title .muted { font-size: 10px; letter-spacing: 0.035em; }
+.view-tab { font-size: 12px; font-weight: 700; }
+.map-kpi > span { font-size: 11px; letter-spacing: 0.06em; }
+.map-kpi strong { font-weight: 750; }
+.map-kpi small, .radius-ends, .upload-label small { font-size: 11px; }
+.field-label, .map-side select, .side-action { font-size: 12px; }
+.analysis-note, .upload-status, .explorer-caveat { font-size: 12px; line-height: 1.7; }
+.upload-label strong { font-size: 13px; }
+.quiz-option { font-size: 12px; font-weight: 700; }
+
+.mission h3 { font-size: 27px; }
+.mission p { font-size: 15px; }
+.mission summary { font-size: 13px; font-weight: 700; }
+.mission details ol { font-size: 14px; }
+.mission details li { line-height: 1.7; }
+.complete-label, .tip { font-size: 12px; }
+.deliverable-box ul { font-size: 13px; }
+.response-form label { font-size: 13px; }
+.response-form input, .response-form textarea {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.response-form small { font-size: 11px; }
+.footer-links a, .footer p { font-size: 12px; }
+.footer-foot { font-size: 11px; }
+
+@media (max-width: 1050px) {
+  .hero h1 { font-size: 55px; }
+}
+
+@media (max-width: 790px) {
+  .hero h1 { font-size: clamp(43px, 8.8vw, 61px); }
+  .section h2 { line-height: 1.2; }
+}
+
+@media (max-width: 540px) {
+  .brand-label { font-size: 12px; }
+  .hero h1 { font-size: 42px; }
+  .hero-lead { font-size: 15px; }
+  .section h2 { font-size: 33px; }
+  .mission h3 { font-size: 22px; }
+  .mini-question h3 { font-size: 17px; }
+}

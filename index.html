@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102a4d">
+  <meta name="description" content="An original guided 75-minute Location Science lab: investigate reported crime incidents using ArcGIS Pro, compare heat maps with Getis-Ord Gi* analysis, and practice spatial reasoning in your browser.">
+  <title>Lab 02: Analyzing Crime Patterns — Location Science</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./typography.css">
+  <link rel="stylesheet" href="./course-layout.css">
+  <script defer src="./app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="brand" aria-label="Location Science lab, back to top">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><path d="M8 23.5 17 9l10.5 14.5M9.5 23.5h17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17" cy="9" r="3" fill="currentColor"/><circle cx="8" cy="23.5" r="3" fill="currentColor"/><circle cx="27.5" cy="23.5" r="3" fill="currentColor"/></svg></span>
+        <span class="brand-label">LOCATION<span>SCIENCE</span><small>FIELD LAB / 02</small></span>
+      </a>
+      <nav aria-label="Primary navigation" class="top-nav">
+        <a href="#brief">Brief</a>
+        <a href="#explorer">Explore</a>
+        <a href="#workflow">ArcGIS Pro guide</a>
+        <a href="#checkpoints">Submit</a>
+      </nav>
+      <a class="header-cta" href="#data">Get the data <span aria-hidden="true">↗</span></a>
+      <button id="mobileNavToggle" class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <aside class="course-sidebar" aria-label="Course lab navigation">
+    <div class="sidebar-course">
+      <span class="sidebar-school">SAINT LOUIS UNIVERSITY</span>
+      <strong>Location Science</strong>
+      <p>Spatial analysis · Lab manual</p>
+    </div>
+    <nav class="sidebar-nav" aria-label="On this page">
+      <div class="sidebar-group">CURRENT EXERCISE</div>
+      <a href="#top" class="sidebar-current"><span>02</span> Analyzing crime patterns</a>
+      <div class="sidebar-group sidebar-group-spaced">LAB CONTENTS</div>
+      <a href="#brief"><span>01</span> Background &amp; objectives</a>
+      <a href="#data"><span>02</span> Download data</a>
+      <a href="#explorer"><span>03</span> Explore the patterns</a>
+      <a href="#workflow"><span>04</span> ArcGIS Pro workflow</a>
+      <a href="#checkpoints"><span>05</span> Questions &amp; deliverables</a>
+    </nav>
+    <div class="sidebar-foot">
+      <span>INDEPENDENT CLASS EXERCISE</span>
+      <strong>75 minutes</strong>
+      <p>Read the instructions and complete the questions as you work.</p>
+    </div>
+  </aside>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="hero-contours" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <div class="overline"><span class="pulse-dot"></span> LOCATION SCIENCE / HANDS-ON LAB 02</div>
+          <h1>Analyzing <em>crime patterns</em> with spatial statistics</h1>
+          <p class="hero-lead">A guided ArcGIS Pro exercise using incident mapping, density visualization, and hot spot analysis. Investigate where reported robberies cluster—and how to interpret that pattern responsibly.</p>
+          <div class="hero-actions"><a class="button button-coral" href="#workflow">Start the lab <span aria-hidden="true">↗</span></a><a class="button button-ghost" href="#explorer">Try the map explorer</a></div>
+          <div class="hero-metadata" aria-label="Lab details">
+            <span><strong>75</strong> minutes</span><i aria-hidden="true"></i><span><strong>05</strong> missions</span><i aria-hidden="true"></i><span>ArcGIS Pro + browser</span>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="Illustrative incident density map">
+          <div class="mini-toolbar"><span class="mini-dot red"></span><span class="mini-dot yellow"></span><span class="mini-dot green"></span><span>MAP EXAMPLE / ILLUSTRATIVE</span></div>
+          <svg class="hero-graphic" viewBox="0 0 440 330" role="img" aria-label="Abstract teaching illustration of clustered incident points and density contours. Not actual crime data.">
+            <defs><pattern id="hgrid" width="34" height="34" patternUnits="userSpaceOnUse"><path d="M 34 0 L 0 0 0 34" fill="none" stroke="#47617e" stroke-width=".6" opacity=".4"/></pattern><radialGradient id="hotA"><stop stop-color="#f07c63" stop-opacity=".9"/><stop offset=".45" stop-color="#ee956d" stop-opacity=".45"/><stop offset="1" stop-color="#ee956d" stop-opacity="0"/></radialGradient><radialGradient id="hotB"><stop stop-color="#6ebde1" stop-opacity=".8"/><stop offset="1" stop-color="#6ebde1" stop-opacity="0"/></radialGradient></defs>
+            <rect x="0" y="0" width="440" height="330" fill="url(#hgrid)"/>
+            <path d="M-30 219 C80 164 141 239 242 156 S389 147 479 54" stroke="#416581" stroke-width="19" fill="none" stroke-linecap="round" opacity=".48"/>
+            <path d="M-30 219 C80 164 141 239 242 156 S389 147 479 54" stroke="#8fadc2" stroke-width="1.5" fill="none" stroke-dasharray="5 8" opacity=".45"/>
+            <ellipse cx="153" cy="151" rx="118" ry="91" fill="url(#hotA)"/><ellipse cx="326" cy="224" rx="93" ry="78" fill="url(#hotB)"/>
+            <g fill="#ffb2a1"><circle cx="95" cy="120" r="3"/><circle cx="126" cy="154" r="2.8"/><circle cx="162" cy="125" r="3"/><circle cx="180" cy="174" r="3"/><circle cx="143" cy="199" r="2.5"/><circle cx="110" cy="178" r="2.5"/><circle cx="196" cy="130" r="2.5"/><circle cx="221" cy="160" r="2.5"/><circle cx="173" cy="100" r="2.5"/><circle cx="118" cy="92" r="2.5"/><circle cx="138" cy="130" r="2.5"/></g>
+            <g fill="#95d4ef"><circle cx="289" cy="200" r="2.7"/><circle cx="316" cy="232" r="3"/><circle cx="351" cy="215" r="2.6"/><circle cx="362" cy="252" r="2.7"/><circle cx="289" cy="253" r="2.7"/><circle cx="322" cy="265" r="2.7"/></g>
+            <g stroke="#f6baa7" fill="none" stroke-width="1.5"><circle cx="147" cy="149" r="52" stroke-dasharray="4 6"/><path d="M147 97v-11M147 201v11M95 149H84M199 149h11"/></g>
+            <g font-family="ui-monospace,monospace" fill="#b9cce0" font-size="10" letter-spacing="1"><text x="22" y="29">ILLUSTRATIVE STUDY AREA</text><text x="304" y="309">N ↑  /  GRID 16</text></g>
+          </svg>
+          <div class="hero-card-bottom"><div><span class="card-chip">01</span> Explore the pattern</div><span class="mini-legend"><b></b> Density surface</span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="progress-strip" role="region" aria-label="Learning progress">
+      <div class="container progress-inner"><span class="progress-title"><span class="progress-icon">◉</span> YOUR LAB PROGRESS</span><div class="progress-track"><div id="progressFill" class="progress-fill"></div></div><span id="progressText" class="progress-text">0 of 5 missions complete</span><button id="resetProgress" type="button" class="text-button">Reset</button></div>
+    </div>
+
+    <nav class="course-contents container" aria-label="Lab table of contents">
+      <div class="contents-head"><span>ON THIS PAGE</span><strong>Lab contents</strong><p>Follow the sections in order, or jump directly to the ArcGIS Pro steps.</p></div>
+      <div class="contents-links"><a href="#brief">01. Background</a><a href="#data">02. Data</a><a href="#explorer">03. Interactive exploration</a><a href="#workflow">04. ArcGIS Pro instructions</a><a href="#checkpoints">05. Questions &amp; submission</a></div>
+    </nav>
+
+    <section id="brief" class="section section-intro">
+      <div class="container intro-grid">
+        <div><div class="section-kicker">01 / BACKGROUND</div><h2>Understanding spatial patterns of reported crime</h2></div>
+        <div class="intro-right"><p>Imagine a city analyst is asked where public resources could be evaluated. You have a year of reported robbery incidents, but your first map is just thousands of overlapping dots.</p><p>Your task is to reveal where incidents accumulate, test whether clustering is statistically supported, and explain what you <strong>cannot</strong> infer from the results.</p><div class="notice"><span class="notice-icon">!</span><span><strong>Responsible mapping:</strong> These are reported incidents, not a direct measure of personal risk. Location redaction, reporting differences, movement patterns, and the choice of spatial scale matter.</span></div></div>
+      </div>
+      <div class="container learning-grid" aria-label="Learning objectives">
+        <div class="learning-item"><span class="learning-num">01</span><strong>Map the events</strong><p>Convert coordinates into geospatial point features.</p></div>
+        <div class="learning-item"><span class="learning-num">02</span><strong>Reveal density</strong><p>Experiment with heat-map scale and search radius.</p></div>
+        <div class="learning-item"><span class="learning-num">03</span><strong>Test clustering</strong><p>Use a statistically explicit Getis-Ord Gi* workflow.</p></div>
+        <div class="learning-item"><span class="learning-num">04</span><strong>Communicate carefully</strong><p>Make a defensible map and acknowledge limitations.</p></div>
+      </div>
+      <div class="container reading-note"><strong>Before you begin</strong><p>Create a dedicated <code>Crime_Patterns_Lab</code> folder and save all ArcGIS Pro outputs there. You can complete the browser practice independently; the full hotspot analysis requires ArcGIS Pro. The sample explorer is simulated, while the formal exercise uses the official Chicago crime dataset.</p></div>
+    </section>
+
+    <section id="data" class="section data-section">
+      <div class="container data-grid">
+        <div><div class="section-kicker">02 / DATA</div><h2>Download the exercise data</h2><p>The ArcGIS Pro exercise uses official City of Chicago police-reported incident data for <strong>2024 robberies</strong>. The interactive explorer below starts with <strong>clearly labeled simulated data</strong>, so you can learn the tools before importing the real CSV.</p><p class="source-note">The official data approximate locations to protect privacy. Do not use the records to infer specific addresses.</p></div>
+        <div class="data-cards">
+          <article class="data-card data-card-main"><div class="data-top"><span class="data-type">OFFICIAL SOURCE / CSV</span><span aria-hidden="true">↗</span></div><h3>Chicago robbery records</h3><p>2024 incidents • incident type, date, latitude &amp; longitude</p><a class="button button-dark" href="https://data.cityofchicago.org/resource/ijzp-q8t2.csv?year=2024&amp;primary_type=ROBBERY&amp;%24limit=50000" target="_blank" rel="noopener noreferrer">Download filtered CSV ↗</a><a class="inline-link" href="https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2" target="_blank" rel="noopener noreferrer">Official portal / manual download</a></article>
+          <article class="data-card"><div class="data-top"><span class="data-type">PRACTICE / SYNTHETIC</span><span aria-hidden="true">↓</span></div><h3>Offline practice points</h3><p>Self-contained, simulated incident records for testing XY Table To Point.</p><button id="downloadDemo" class="inline-link inline-button" type="button">Download practice CSV ↓</button></article>
+          <article class="data-card"><div class="data-top"><span class="data-type">OPTIONAL / POLYGONS</span><span aria-hidden="true">↗</span></div><h3>Community areas</h3><p>Use administrative areas for optional point-in-polygon counts.</p><a class="inline-link" href="https://data.cityofchicago.org/d/cauq-8yn6" target="_blank" rel="noopener noreferrer">Get boundary data ↗</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="explorer" class="section explorer-section">
+      <div class="container">
+        <div class="section-heading"><div><div class="section-kicker">03 / EXPLORATORY ANALYSIS</div><h2>Compare points, density, and clusters</h2><p>Switch representations, change the analysis radius, and see how your interpretation responds. You can also import the real Chicago CSV and explore its coordinate distribution.</p></div><span class="section-tag">INTERACTIVE EXERCISE</span></div>
+        <div class="explorer-shell">
+          <div class="explorer-controls"><div class="control-title"><span class="status-light"></span> MAP LAB <span id="datasetBadge" class="muted">SIMULATED DATA</span></div><div class="view-tabs" role="group" aria-label="Map display mode"><button type="button" class="view-tab active" data-mode="points" aria-pressed="true">● Points</button><button type="button" class="view-tab" data-mode="density" aria-pressed="false">◉ Density</button><button type="button" class="view-tab" data-mode="gistar" aria-pressed="false">▦ Gi* demo</button></div></div>
+          <div class="explorer-main"><div class="map-wrap"><canvas id="analysisMap" role="img" aria-label="Interactive schematic map of simulated incident points, density, or exploratory Getis-Ord Gi-star results"></canvas><div class="map-north" aria-hidden="true">N <span>↑</span></div><div class="map-scale-label">RELATIVE COORDINATE VIEW · NO BASEMAP</div><div id="mapTooltip" class="map-tooltip" hidden></div></div><div class="map-side"><div class="map-kpi"><span>VISIBLE INCIDENTS</span><strong id="visibleCount">—</strong><small id="dataLabel">Simulated illustration</small></div><div class="map-kpi secondary"><span id="metricLabel">VIEW MODE</span><strong id="metricValue">Points</strong><small id="metricDetail">Each dot is an incident</small></div><label for="crimeFilter" class="field-label">Incident category</label><select id="crimeFilter"><option value="all">All categories</option></select><label for="radiusSlider" class="field-label radius-label">Neighborhood radius <output id="radiusValue" for="radiusSlider">36</output></label><input id="radiusSlider" type="range" min="16" max="72" step="4" value="36"><div class="radius-ends"><span>Narrow</span><span>Broad</span></div><button id="exportMap" class="side-action" type="button">Save current map PNG ↓</button><div class="analysis-note" id="analysisNote">Point maps preserve individual records, but overlap can hide concentration.</div></div></div>
+          <div class="explorer-bottom"><div class="upload-area"><label for="csvUpload" class="upload-label"><span class="upload-icon">↑</span><span><strong>Explore your own CSV</strong><small>Choose a file with numeric longitude and latitude fields. Processed locally in your browser.</small></span></label><input id="csvUpload" type="file" accept=".csv,text/csv"><button type="button" class="text-button" id="resetDataset">Restore demo</button></div><div id="uploadStatus" class="upload-status" aria-live="polite">Nothing is uploaded to a server.</div></div>
+        </div>
+        <p class="explorer-caveat"><strong>Scientific distinction.</strong> The browser’s Gi* view calculates an illustrative, unadjusted grid-based local statistic. It is not Esri’s optimized analysis and does not apply false-discovery-rate corrections. Complete the formal hotspot step in ArcGIS Pro before making statistical claims.</p>
+        <div class="mini-question"><div><span class="small-kicker">QUICK THINK / 01</span><h3>When you change a heat map's search radius, what changes?</h3></div><div class="mini-question-actions"><button class="quiz-option" data-quick-answer="wrong" type="button">The original incidents</button><button class="quiz-option" data-quick-answer="right" type="button">The estimated density surface</button></div><p id="quickFeedback" role="status" aria-live="polite"></p></div>
+      </div>
+    </section>
+
+    <section id="workflow" class="section workflow-section">
+      <div class="container"><div class="section-heading"><div><div class="section-kicker">04 / WORKFLOW USING ARCGIS PRO</div><h2>Step-by-step ArcGIS Pro instructions</h2><p>Complete the five activities in sequence. Each section includes the method, the recommended settings, and questions to discuss. Mark each one done as you proceed.</p></div><div class="workflow-time"><strong>75</strong><span>MINUTE<br>WORKSHOP</span></div></div>
+      <div class="mission-list">
+        <article class="mission" data-mission="1"><div class="mission-index">01</div><div class="mission-body"><div class="mission-top"><div><span class="mission-time">8 MIN · REASONING</span><h3>Frame the question</h3></div><label class="complete-label"><input type="checkbox" data-complete="1"><span>Done</span></label></div><p>Write a hypothesis: are reported robbery incidents more spatially concentrated than a random pattern? Decide whether you are analyzing <em>numbers of incidents</em> or <em>risk per person</em>.</p><details open><summary>Student tasks and discussion <span>+</span></summary><ol><li>Explain why a map of total incidents cannot by itself establish an individual's likelihood of victimization.</li><li>Name two reasons reported incident data may differ from the true distribution of all offenses.</li><li>Predict what the heat map might reveal that the point map cannot.</li></ol></details></div></article>
+        <article class="mission" data-mission="2"><div class="mission-index">02</div><div class="mission-body"><div class="mission-top"><div><span class="mission-time">15 MIN · DATA PREPARATION</span><h3>Turn a table into a map</h3></div><label class="complete-label"><input type="checkbox" data-complete="2"><span>Done</span></label></div><p>Create a geospatial point layer from the downloaded Chicago robbery CSV.</p><details open><summary>Exact ArcGIS Pro instructions <span>+</span></summary><ol><li>Open <strong>ArcGIS Pro</strong> and create a new <strong>Map</strong> project called <code>Crime_Patterns_Lab</code>.</li><li>Use <strong>Map → Add Data</strong> to add your filtered CSV table.</li><li>Go to <strong>Analysis → Tools</strong>, search <strong>XY Table To Point</strong>.</li><li>Input Table: your CSV. X Field: <code>longitude</code>. Y Field: <code>latitude</code>. Coordinate System: <strong>WGS 1984</strong>.</li><li>Save the output as <code>Robberies_2024</code> in the project geodatabase. Examine the attribute table and confirm features plot in Chicago.</li><li>Optional: use <strong>Project</strong> to make an analysis copy in <strong>NAD 1983 UTM Zone 16N</strong> for local distance work.</li></ol><div class="tip"><strong>Check:</strong> Missing or nonnumeric coordinates cannot form valid point geometry. Inspect tool messages rather than assuming every CSV record has a location.</div></details></div></article>
+        <article class="mission" data-mission="3"><div class="mission-index">03</div><div class="mission-body"><div class="mission-top"><div><span class="mission-time">15 MIN · VISUAL ANALYSIS</span><h3>Reveal density, then challenge it</h3></div><label class="complete-label"><input type="checkbox" data-complete="3"><span>Done</span></label></div><p>Make a heat map and observe how symbology choices can change the visual story.</p><details open><summary>Exact ArcGIS Pro instructions <span>+</span></summary><ol><li>Select the robbery point layer.</li><li>Choose <strong>Feature Layer → Symbology → Heat Map</strong>.</li><li>Try <strong>Dynamic</strong> and <strong>Constant</strong> rendering, and vary the <strong>Radius</strong>.</li><li>Zoom from the whole city to a smaller part. Note whether red areas change and why.</li><li>Save the map as a bookmark or export a screenshot for comparison.</li></ol><div class="tip"><strong>Interpretation:</strong> A visual heat map shows relative density. Red is not a hypothesis test.</div></details></div></article>
+        <article class="mission" data-mission="4"><div class="mission-index">04</div><div class="mission-body"><div class="mission-top"><div><span class="mission-time">22 MIN · SPATIAL STATISTICS</span><h3>Test for statistically significant hotspots</h3></div><label class="complete-label"><input type="checkbox" data-complete="4"><span>Done</span></label></div><p>Move from visual impression to spatial statistics using optimized Getis-Ord Gi*.</p><details open><summary>Exact ArcGIS Pro instructions <span>+</span></summary><ol><li>Open <strong>Analysis → Tools → Optimized Hot Spot Analysis</strong>.</li><li>Input Features: <code>Robberies_2024</code>. Output Features: <code>Robbery_GiStar</code>.</li><li>Leave <strong>Analysis Field</strong> empty: these are incident points, not measurements.</li><li>For Incident Data Aggregation Method, choose <strong>Count incidents within hexagon grid</strong>. Leave the remaining options at their defaults for the first run.</li><li>Run. Open the Geoprocessing <strong>Messages</strong> to inspect the aggregation size and analysis distance selected by the tool.</li><li>Open the resulting table. Examine <code>Gi_Bin</code>, z-scores and p-values. Compare the result with the heat map.</li></ol><div class="tip"><strong>Challenge:</strong> Repeat with a fishnet grid. Why might grid geometry, study-area definition, or analysis scale change the result? Without a bounding polygon, empty cells may be left out of analysis.</div></details></div></article>
+        <article class="mission" data-mission="5"><div class="mission-index">05</div><div class="mission-body"><div class="mission-top"><div><span class="mission-time">15 MIN · COMMUNICATION</span><h3>Design the evidence, not just the map</h3></div><label class="complete-label"><input type="checkbox" data-complete="5"><span>Done</span></label></div><p>Produce an honest final figure and a cautious interpretation of what the patterns mean.</p><details open><summary>Submission requirements <span>+</span></summary><ol><li>Create a two-panel layout: <strong>robbery density</strong> on the left and <strong>Gi* hotspot significance</strong> on the right.</li><li>Include clear titles, legend, scale bar, year, data credit and the analytical methods used.</li><li>Export a <strong>PDF or PNG</strong> from ArcGIS Pro.</li><li>Write a short conclusion: where are clusters detected, how do the maps differ, and what contextual information is missing?</li><li>Complete the response form below and download your answer file for class submission.</li></ol><div class="tip"><strong>Do not claim causation:</strong> A cluster does not demonstrate who caused an incident, why it occurred, or what policy would fix it.</div></details></div></article>
+      </div></div>
+    </section>
+
+    <section id="checkpoints" class="section submission-section">
+      <div class="container submission-grid"><div><div class="section-kicker">05 / QUESTIONS &amp; SUBMISSION</div><h2>Document your findings</h2><p>Record your observations and download a response sheet. Your text remains on this device; the website does not collect or grade submissions.</p><div class="deliverable-box"><strong>Final deliverables</strong><ul><li>One two-panel ArcGIS Pro map (PNG or PDF)</li><li>One text response sheet from this page</li><li>One sentence stating a limitation of the data</li></ul></div></div><form id="responseForm" class="response-form"><label for="studentName">Student name <span>(optional)</span></label><input id="studentName" type="text" placeholder="Your name"><label for="answer1">1. Where did you observe the strongest concentration of reported robberies?</label><textarea id="answer1" rows="3" placeholder="Describe the area using your map, not an assumption."></textarea><label for="answer2">2. What did the Gi* result add beyond the heat map?</label><textarea id="answer2" rows="3" placeholder="Discuss statistical significance and scale."></textarea><label for="answer3">3. Identify a data or methodological limitation.</label><textarea id="answer3" rows="3" placeholder="Think about reporting, exposure, redacted positions, or analysis choices."></textarea><label for="answer4">4. What additional evidence would you need before recommending an intervention?</label><textarea id="answer4" rows="3" placeholder="Explain the decision carefully."></textarea><div class="form-actions"><button type="button" id="downloadAnswers" class="button button-coral">Download responses ↓</button><button type="button" id="printWorksheet" class="button button-outline">Print / save PDF</button></div><small id="formStatus" role="status" aria-live="polite">Responses save in your browser as you type.</small></form></div>
+    </section>
+
+    <section class="section closing-section"><div class="container closing-content"><div><span class="section-kicker">THE TAKEAWAY</span><h2>Mapping shows where.<br>Analysis asks <em>why that pattern matters.</em></h2><p>Good spatial reasoning combines a reproducible method, an appropriate scale, and humility about what the data can support.</p></div><a href="#top" class="button button-light">Return to the top ↑</a></div></section>
+  </main>
+  <footer class="footer"><div class="container footer-inner"><div><strong>LOCATION SCIENCE / CRIME PATTERNS LAB</strong><p>An original teaching exercise designed for an introductory spatial analysis workshop.</p></div><div class="footer-links"><a href="https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2" target="_blank" rel="noopener noreferrer">City of Chicago data ↗</a><a href="https://pro.arcgis.com/en/pro-app/latest/tool-reference/spatial-statistics/optimized-hot-spot-analysis.htm" target="_blank" rel="noopener noreferrer">ArcGIS Pro documentation ↗</a><a href="#top">Back to top ↑</a></div></div><div class="container footer-foot">Teaching site · Browser practice is illustrative · No reference repository or third-party lab assets used</div></footer>
+</body>
+</html>
